@@ -13,15 +13,22 @@ const Cadastro = () => {
                 <h1>Cadastro</h1>
                 <div>
                     <label>Nome</label>
-                    <input type="text" />
-                </div>
-                <div>
-                    <label>Nome de usuário</label>
                     <input type="text"
                         {...register("nome",
                             {
                                 required: "O nome é obrigatório",
                                 minLength: { value: 3, message: "O nome deve ter no mínimo 3 caracteres" },
+                            })
+                        }
+                    />
+                </div>
+                <div>
+                    <label>Nome de usuário</label>
+                    <input type="text"
+                        {...register("nomeUsuario",
+                            {
+                                required: "O nome de usuário é obrigatório",
+                                minLength: { value: 3, message: "O nome de usuário deve ter no mínimo 3 caracteres" },
                             })
                         }
                     />
