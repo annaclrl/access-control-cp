@@ -1,15 +1,36 @@
 import { useNavigate } from "react-router-dom";
 import type { Usuario } from "../../types/Usuarios";
 import { useForm } from "react-hook-form";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const Cadastro = () => {
     const navigate = useNavigate();
 
     const { register, handleSubmit, formState: { errors } } = useForm<Usuario>();
 
+
+    const onSubmit = handleSubmit(async (data: Usuario) => {
+        const responseUsuario = await fetch(`${apiUrl}/usuarios?nomeUsuario=${data.nomeUsuario}`);
+        const usuarioExistente = await responseUsuario.json();
+
+        if (usuarioExistente.length > 0) {
+            alert("Nome de usuário já existe.");
+            return;
+        }
+
+        const responseEmail = await fetch(`${apiUrl}/usuarios?email=${data.email}`);
+        const emailExistente = await responseEmail.json();
+
+        if (emailExistente.length > 0) {
+            alert("Email já cadastrado.");
+            return;
+        }
+
+    })
+
     return (
         <main>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={onSubmit}>
                 <h1>Cadastro</h1>
                 <div>
                     <label>Nome</label>
