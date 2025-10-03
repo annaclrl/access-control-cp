@@ -36,7 +36,12 @@ const Cadastro = () => {
                 <div>
                     <label>Email</label>
                     <input type="email"
-                        {...register("email", { required: true })}
+                        {...register("email",
+                            {
+                                required: "O email é obrigatório",
+                                minLength: { value: 10, message: "O email deve ter no mínimo 10 caracteres" },
+                            })
+                        }
                     />
                 </div>
                 <button type="submit" onClick={() => navigate("/login")}>Cadastrar</button>
