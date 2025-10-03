@@ -1,51 +1,46 @@
 import { useNavigate } from "react-router-dom";
 import type { Usuario } from "../../types/Usuarios";
 import { useForm } from "react-hook-form";
-const apiUrl = import.meta.env.VITE_API_URL;
 
 const Cadastro = () => {
     const navigate = useNavigate();
 
     const { register, handleSubmit, formState: { errors } } = useForm<Usuario>();
 
-
     const onSubmit = handleSubmit(async (data: Usuario) => {
-        const responseUsuario = await fetch(`${apiUrl}/usuarios?nomeUsuario=${data.nomeUsuario}`);
-        const usuarioExistente = await responseUsuario.json();
-
-        if (usuarioExistente.length > 0) {
-            alert("Nome de usuário já existe.");
-            return;
-        }
-
-        const responseEmail = await fetch(`${apiUrl}/usuarios?email=${data.email}`);
-        const emailExistente = await responseEmail.json();
-
-        if (emailExistente.length > 0) {
-            alert("Email já cadastrado.");
-            return;
-        }
-
         try {
-            const response = await fetch(`${apiUrl}/usuarios`, {
+
+            const responseUsuario = await fetch(`http://localhost:3333/usuarios?nomeUsuario=${data.nomeUsuario}`);
+            const usuarioExistente = await responseUsuario.json();
+            if (usuarioExistente.length > 0) {
+                alert("Nome de usuário já cadastrado!");
+                return;
+            }
+
+            const responseEmail = await fetch(`http://localhost:3333/usuarios?email=${data.email}`);
+            const emailExistente = await responseEmail.json();
+            if (emailExistente.length > 0) {
+                alert("Email já cadastrado!");
+                return;
+            }
+
+            const response = await fetch(`http://localhost:3333/usuarios`, {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(data)
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data),
             });
 
             if (!response.ok) throw new Error("Erro ao cadastrar usuário.");
-            alert("Cadastro realizado com sucesso!");
 
+            alert("Cadastro realizado com sucesso!");
+            navigate("/");
         } catch (error) {
             console.error(error);
             alert("Ocorreu um erro ao tentar cadastrar. Tente novamente.");
         }
-
     });
 
-    return (
+     return (
         <main>
             <form onSubmit={onSubmit}>
                 <h1>Cadastro</h1>
@@ -89,6 +84,6 @@ const Cadastro = () => {
             </form>
         </main>
     )
-}
+};
 
 export default Cadastro;
