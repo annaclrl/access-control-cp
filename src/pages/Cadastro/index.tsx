@@ -21,6 +21,7 @@ const Cadastro = () => {
                             })
                         }
                     />
+                    {errors.nome && <p>{errors.nome.message}</p>}
                 </div>
                 <div>
                     <label>Nome de usuário</label>
@@ -32,6 +33,7 @@ const Cadastro = () => {
                             })
                         }
                     />
+                    {errors.nomeUsuario && <p>{errors.nomeUsuario.message}</p>}
                 </div>
                 <div>
                     <label>Email</label>
@@ -43,6 +45,7 @@ const Cadastro = () => {
                             })
                         }
                     />
+                    {errors.email && <p>{errors.email.message}</p>}
                 </div>
                 <button type="submit" onClick={() => navigate("/login")}>Cadastrar</button>
             </form>
