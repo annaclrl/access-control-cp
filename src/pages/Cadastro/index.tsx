@@ -1,11 +1,15 @@
 import { useNavigate } from "react-router-dom";
+import type { Usuario } from "../../types/Usuarios";
+import { useForm } from "react-hook-form";
 
 const Cadastro = () =>{
-
     const navigate = useNavigate();
+
+    const {register, handleSubmit, formState: { errors }} = useForm<Usuario>();
+
     return (
         <main>
-            <form>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <h1>Cadastro</h1>
                 <div>
                     <label>Nome</label>
