@@ -2,10 +2,10 @@ import { useNavigate } from "react-router-dom";
 import type { Usuario } from "../../types/Usuarios";
 import { useForm } from "react-hook-form";
 
-const Cadastro = () =>{
+const Cadastro = () => {
     const navigate = useNavigate();
 
-    const {register, handleSubmit, formState: { errors }} = useForm<Usuario>();
+    const { register, handleSubmit, formState: { errors } } = useForm<Usuario>();
 
     return (
         <main>
@@ -13,17 +13,26 @@ const Cadastro = () =>{
                 <h1>Cadastro</h1>
                 <div>
                     <label>Nome</label>
-                    <input type="text"/>
+                    <input type="text" />
                 </div>
                 <div>
                     <label>Nome de usuário</label>
-                    <input type="text"/>
+                    <input type="text"
+                        {...register("nome",
+                            {
+                                required: "O nome é obrigatório",
+                                minLength: { value: 3, message: "O nome deve ter no mínimo 3 caracteres" },
+                            })
+                        }
+                    />
                 </div>
                 <div>
                     <label>Email</label>
-                    <input type="email"/>
+                    <input type="email"
+                        {...register("email", { required: true })}
+                    />
                 </div>
-                <button type="submit" onClick={() => navigate("/login")}> Cadastrar</button>
+                <button type="submit" onClick={() => navigate("/login")}>Cadastrar</button>
             </form>
         </main>
     )
