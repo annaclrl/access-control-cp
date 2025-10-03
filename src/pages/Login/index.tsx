@@ -29,13 +29,12 @@ const Login = () => {
         }
     }
 
-
     return (
-        <main>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <h1>Login</h1>
-                <div>
-                    <label>Nome de usuário</label>
+        <main className="flex justify-center items-center h-screen bg-gray-500">
+            <form onSubmit={handleSubmit(onSubmit)} className="bg-white p-6 rounded-2xl shadow-md w-90">
+                <h1 className="text-xl font-bold mb-4 text-center">Login</h1>
+                <div className="mb-4">
+                    <label className="block mb-2">Nome de usuário</label>
                     <input type="text"
                         {...register("nomeUsuario",
                             {
@@ -43,11 +42,12 @@ const Login = () => {
                                 minLength: { value: 3, message: "O nome de usuário deve ter no mínimo 3 caracteres" },
                             })
                         }
+                        className="w-full border rounded p-2"
                     />
-                    {errors.nomeUsuario && <p>{errors.nomeUsuario.message}</p>}
+                    {errors.nomeUsuario && <p className="text-red-500 text-sm mt-1">{errors.nomeUsuario.message}</p>}
                 </div>
-                <div>
-                    <label>Email</label>
+                <div className="mb-4">
+                    <label className="block mb-2">Email</label>
                     <input type="email"
                         {...register("email",
                             {
@@ -55,14 +55,15 @@ const Login = () => {
                                 minLength: { value: 10, message: "O email deve ter no mínimo 10 caracteres" },
                             })
                         }
+                         className="w-full border rounded p-2"
                     />
-                    {errors.email && <p>{errors.email.message}</p>}
+                    {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
                 </div>
-                <button type="submit" onClick={() => navigate("/")}>Entrar</button>
-                <p> Ainda não tem uma conta? <Link to={"/cadastro"}>Cadastre-se aqui</Link></p>
+                <button type="submit" onClick={() => navigate("/")} className="w-full bg-gray-800 text-white rounded p-2 ">Entrar</button>
+                <p className="mt-4 text-center text-sm text-gray-600"> Ainda não tem uma conta? <Link to={"/cadastro"} className="text-blue-500 underline">Cadastre-se aqui</Link></p>
             </form>
         </main>
     )
-}
+} 
 
 export default Login;
