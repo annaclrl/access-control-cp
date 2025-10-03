@@ -26,7 +26,24 @@ const Cadastro = () => {
             return;
         }
 
-    })
+        try {
+            const response = await fetch(`${apiUrl}/usuarios`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (!response.ok) throw new Error("Erro ao cadastrar usuário.");
+            alert("Cadastro realizado com sucesso!");
+
+        } catch (error) {
+            console.error(error);
+            alert("Ocorreu um erro ao tentar cadastrar. Tente novamente.");
+        }
+
+    });
 
     return (
         <main>
