@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import type { LoginForm } from "../../types/Usuarios";
 import { useForm } from "react-hook-form";
-const apiUrl = import.meta.env.VITE_API_URL;
+
 
 const Login = () => {
 
@@ -11,7 +11,7 @@ const Login = () => {
 
     const onSubmit = async (data: LoginForm) => {
         try {
-            const response = await fetch(`${apiUrl}/usuarios?nomeUsuario=${data.nomeUsuario}&email=${data.email}`,);
+            const response = await fetch(`http://localhost:3333/usuarios?nomeUsuario=${data.nomeUsuario}&email=${data.email}`,);
 
             if(!response.ok) throw new Error("Erro ao consultar usuário.");
 
@@ -20,6 +20,7 @@ const Login = () => {
             if (usuario.length > 0) {
                 localStorage.setItem("usuarioLogado", JSON.stringify(usuario[0]));
                 alert("Login realizado com sucesso!");
+                navigate("/");
             } else {
                 alert("Nome de usuário ou email incorretos.");
             }
@@ -59,7 +60,7 @@ const Login = () => {
                     />
                     {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
                 </div>
-                <button type="submit" onClick={() => navigate("/")} className="w-full bg-gray-800 text-white rounded p-2 ">Entrar</button>
+                <button type="submit" className="w-full bg-gray-800 text-white rounded p-2 ">Entrar</button>
                 <p className="mt-4 text-center text-sm text-gray-600"> Ainda não tem uma conta? <Link to={"/cadastro"} className="text-blue-500 underline">Cadastre-se aqui</Link></p>
             </form>
         </main>
