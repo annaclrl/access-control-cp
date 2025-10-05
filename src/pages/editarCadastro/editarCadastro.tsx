@@ -42,42 +42,44 @@ const EditarCadastro = () => {
         });
 
     return (
-    <main>
-      <form onSubmit={onSubmit}>
-        <h1>Editar Cadastro</h1>
+    <main className="flex justify-center items-center h-screen bg-gray-500">
+      <form onSubmit={onSubmit} className="bg-white p-6 rounded-2xl shadow-md w-90">
+        <h1 className="text-xl font-bold mb-4 text-center">Editar Cadastro</h1>
 
         
-        <div>
-          <label>Nome</label>
+        <div className="mb-4">
+          <label className="block mb-2">Nome</label>
           <input
             type="text"
-            {...register("nome", { required: "O nome é obrigatório" })}
+            {...register("nome", { required: "O nome é obrigatório" })}  
+            className="w-full border rounded p-2"
             />
-          {errors.nome && <p>{errors.nome.message}</p>}
+          {errors.nome && <p className="text-red-500 text-sm mt-1">{errors.nome.message}</p>}
         </div>
 
         
-        <div>
-          <label>Nome de Usuário</label>
+        <div className="mb-4">
+          <label className="block mb-2">Nome de Usuário</label>
           <input
             type="text"
             {...register("nomeUsuario", { required: "O nome de usuário é obrigatório" })}
+            className="w-full border rounded p-2"
             />
-          {errors.nomeUsuario && <p>{errors.nomeUsuario.message}</p>}
+          {errors.nomeUsuario && <p className="text-red-500 text-sm mt-1">{errors.nomeUsuario.message}</p>}
         </div>
 
         
-        <div>
-          <label>Email</label>
+        <div className="mb-4">
+          <label className="block mb-2">Email</label>
           <input
             type="email"
             {...register("email", { required: "O email é obrigatório" })}
-            className=""
+            className="w-full border rounded p-2"
           />
-          {errors.email && <p>{errors.email.message}</p>}
+          {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
         </div>
 
-        <button type="submit">
+        <button type="submit" className="w-full bg-gray-800 text-white rounded p-2">
           Salvar Alterações
         </button>
       </form>
