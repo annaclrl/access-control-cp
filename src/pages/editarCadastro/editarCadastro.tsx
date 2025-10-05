@@ -21,3 +21,38 @@ const EditarCadastro = () => {
     fetchUsuario();
   }, [id, setValue]);
   }
+   const onSubmit = async (data: Usuario) => {
+    await fetch(`http://localhost:3333/usuarios/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    alert("Cadastro atualizado!");
+    navigate("/cadastro");
+  };
+
+  if (!usuario) return <p>Carregando...</p>;
+
+  return (
+    <main>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <h1>Editar Cadastro</h1>
+
+        <label>Nome</label>
+        <input {...register("nome")}/>
+
+        <label>Nome de Usuário</label>
+        <input {...register("nomeUsuario")}/>
+
+        <label>Email</label>
+        <input {...register("email")}/>
+
+        <button>Salvar</button>
+      </form>
+    </main>
+  );
+};
+
+export default EditarCadastro;
