@@ -39,28 +39,48 @@ const EditarCadastro = () => {
         }
     });
 
-    if (!usuario) return <p>Carregando...</p>;
-
     return (
-        <main>
-            <form
-                onSubmit={handleSubmit(onSubmit)}
-            >
-                <h1>Editar Cadastro</h1>
+    <main>
+      <form onSubmit={onSubmit}>
+        <h1>Editar Cadastro</h1>
 
-                <label>Nome</label>
-                <input {...register("nome")} />
+        
+        <div>
+          <label>Nome</label>
+          <input
+            type="text"
+            {...register("nome", { required: "O nome é obrigatório" })}
+            />
+          {errors.nome && <p>{errors.nome.message}</p>}
+        </div>
 
-                <label>Nome de Usuário</label>
-                <input {...register("nomeUsuario")} />
+        
+        <div>
+          <label>Nome de Usuário</label>
+          <input
+            type="text"
+            {...register("nomeUsuario", { required: "O nome de usuário é obrigatório" })}
+            />
+          {errors.nomeUsuario && <p>{errors.nomeUsuario.message}</p>}
+        </div>
 
-                <label>Email</label>
-                <input {...register("email")} />
+        
+        <div>
+          <label>Email</label>
+          <input
+            type="email"
+            {...register("email", { required: "O email é obrigatório" })}
+            className=""
+          />
+          {errors.email && <p>{errors.email.message}</p>}
+        </div>
 
-                <button>Salvar</button>
-            </form>
-        </main>
-    );
+        <button type="submit">
+          Salvar Alterações
+        </button>
+      </form>
+    </main>
+  );
 };
 
 export default EditarCadastro;
