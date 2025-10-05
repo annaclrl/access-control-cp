@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import type { Usuario } from "../types/Usuarios";
+
+interface Usuario {
+    nome: string;
+    email: string;
+}
 
 const Header = () => {
     const [usuario, setUsuario] = useState<Usuario | null>(null);
@@ -10,14 +14,15 @@ const Header = () => {
             setUsuario(JSON.parse(usuarioLogado));
         }
     }, []);
-    if (!usuario) return null; 
+
+    if (!usuario) return null;
 
     return (
         <header className="bg-gray-800 text-white py-3 px-6 flex justify-between items-center shadow-md">
-            <h1 className="text-lg font-semibold">Sistema de Usuários</h1>
-            <div className="text-sm">
-                <p><span className="font-bold">{usuario.nome}</span></p>
-                <p>{usuario.email}</p>
+            <h1 className="text-lg font-semibold">Painel de Usuários</h1>
+            <div className="text-right">
+                <p className="font-bold">{usuario.nome}</p>
+                <p className="text-sm">{usuario.email}</p>
             </div>
         </header>
     );
