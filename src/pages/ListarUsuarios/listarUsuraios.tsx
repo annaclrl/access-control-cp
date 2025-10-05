@@ -24,9 +24,22 @@ const ListarUsuarios = () => {
         navigate(`/editar-cadastro/${id}`);
     };
 
+    const handleNovoUsuario = () => {
+        navigate("/cadastro");
+    };
+
     return (
         <main className="flex flex-col items-center min-h-screen bg-gray-100 p-8">
-            <h1 className="text-2xl font-bold mb-6">Usuários Cadastrados</h1>
+            <div className="flex justify-between items-center w-full max-w-3xl mb-6">
+                <h1 className="text-2xl font-bold">Usuários Cadastrados</h1>
+                <button
+                    onClick={handleNovoUsuario}
+                    className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+                >
+                    Novo Usuário
+                </button>
+            </div>
+
             <div className="bg-white shadow-md rounded-lg w-full max-w-3xl p-4">
                 <table className="w-full border-collapse">
                     <thead>
@@ -45,7 +58,8 @@ const ListarUsuarios = () => {
                                 <td className="p-3">{usuario.email}</td>
                                 <td className="p-3 text-center">
                                     <button
-                                        onClick={() => handleEditar(usuario.id)} className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition"
+                                        onClick={() => handleEditar(usuario.id)}
+                                        className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition"
                                     >
                                         Editar
                                     </button>
@@ -58,4 +72,5 @@ const ListarUsuarios = () => {
         </main>
     );
 };
+
 export default ListarUsuarios;

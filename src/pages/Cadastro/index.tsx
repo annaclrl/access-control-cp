@@ -65,6 +65,7 @@ const Cadastro = () => {
                         className="w-full border rounded p-2"
                     />
                     {errors.nome && <p className="text-red-500 text-sm mt-1">{errors.nome.message}</p>}
+
                 </div>
                 <div className="mb-4">
                     <label className="block mb-2">Nome de usuário</label>
