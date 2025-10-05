@@ -30,7 +30,7 @@ const EditarCadastro = () => {
         if (id) fetchUsuario();
     }, [id, setValue]);
 
-    
+
     const onSubmit = handleSubmit(async (data: Usuario) => {
         try {
             // Verifica duplicação de email
@@ -41,7 +41,7 @@ const EditarCadastro = () => {
                 alert("Email já cadastrado! Por favor, use outro.");
                 return;
             }
-            
+
             const response = await fetch(`http://localhost:3334/usuarios/${id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
@@ -51,7 +51,7 @@ const EditarCadastro = () => {
 
             if (response.ok) {
                 alert("Usuário atualizado com sucesso!");
-                navigate("/"); 
+                navigate("/");
             } else {
                 alert("Erro ao atualizar usuário");
             }
@@ -82,7 +82,7 @@ const EditarCadastro = () => {
                     )}
                 </div>
 
-                
+
                 <div className="mb-4">
                     <label className="block mb-2">Nome de Usuário</label>
                     <input
@@ -95,7 +95,7 @@ const EditarCadastro = () => {
                     )}
                 </div>
 
-                
+
                 <div className="mb-4">
                     <label className="block mb-2">Email</label>
                     <input
