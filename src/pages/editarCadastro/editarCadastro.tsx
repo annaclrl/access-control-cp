@@ -22,22 +22,24 @@ const EditarCadastro = () => {
     }, [id, setValue]);
 
     const onSubmit = handleSubmit(async (data: Usuario) => {
-        try {
-            const response = await fetch(`http://localhost:3333/usuarios/${id}`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(data),
-            });
-
-            if (!response.ok) throw new Error("Erro ao atualizar usuário");
-
-            alert("Usuário atualizado com sucesso!");
-            navigate("/");
-        } catch (error) {
-            console.error(error);
-            alert("Erro ao atualizar cadastro. Tente novamente.");
-        }
-    });
+    
+    
+    const checkDuplicado = await fetch(`http://localhost:3333/usuarios?email=${data.email}`);
+    const usuariosDuplicados = await checkDuplicado.json();
+    
+    
+    if (usuariosDuplicados.some((u: Usuario) => u.id !== id)) { 
+        alert("Email já cadastrado! Por favor, use outro.");
+        return;
+    }
+    
+    try {
+        
+        const response = await fetch(`http://localhost:3333/usuarios/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+        });
 
     return (
     <main>
