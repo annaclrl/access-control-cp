@@ -1,20 +1,21 @@
 import { createBrowserRouter } from "react-router-dom";
 import Login from "../pages/Login"
 import Cadastro from "../pages/Cadastro";
-import EditarCadastro from "../pages/EditarCadastro/editarCadastro"; 
+import EditarCadastro from "../pages/EditarCadastro/editarCadastro";
 
 export const routes = createBrowserRouter([
     {
         path: "/",
-        element: <Login/>,
+        element: <Login />,
     },
     {
         path: "/cadastro",
-        element: <Cadastro/>,
+        element: <Cadastro />,
     },
     {
-    path: "/editar-cadastro",
-    element: <EditarCadastro/>, // Rota 3: /editar-cadastro
-    },
+        path: "/editar-cadastro/:id",
+        element: <EditarCadastro />,
+    }
+
 ]);
 

@@ -84,6 +84,7 @@ const Cadastro = () => {
                     {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
                 </div>
                 <button type="submit" className="w-full bg-gray-800 text-white rounded p-2 ">Cadastrar</button>
+                <button type="button" onClick={() => navigate("/editar-cadastro/1")}>Editar Cadastro</button>
             </form>
         </main>
     )
