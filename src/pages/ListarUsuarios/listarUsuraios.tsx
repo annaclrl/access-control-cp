@@ -9,7 +9,7 @@ const ListarUsuarios = () => {
     useEffect(() => {
         const fetchUsuarios = async () => {
             try {
-                const res = await fetch("http://localhost:3333/usuarios");
+                const res = await fetch("http://localhost:3334/usuarios");
                 const data = await res.json();
                 setUsuarios(data);
             } catch (error) {
@@ -20,9 +20,10 @@ const ListarUsuarios = () => {
         fetchUsuarios();
     }, []);
 
-const handleEditar = (id: number) => {
+const handleEditar = (id: string) => {
     navigate(`/editar-cadastro/${id}`);
 };
+
 return (
     <main className="flex flex-col items-center min-h-screen bg-gray-100 p-8">
         <h1 className="text-2xl font-bold mb-6">Usuários Cadastrados</h1>
@@ -44,7 +45,7 @@ return (
                             <td className="p-3">{usuario.email}</td>
                             <td className="p-3 text-center">
                                 <button
-                                    onClick={() => handleEditar(usuario.id!)}  className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition"
+                                    onClick={() => handleEditar(usuario.id)}  className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition"
                                     >
                                     Editar
                                 </button>

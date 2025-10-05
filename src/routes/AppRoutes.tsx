@@ -13,9 +13,9 @@ export const routes = createBrowserRouter([
         element: <Cadastro />,
     },
     {
-    path: "/usuarios",
-    element: <ListarUsuarios />, 
-  },
+        path: "/usuarios",
+        element: <ListarUsuarios />,
+    },
     {
         path: "/editar-cadastro/:id",
         element: <EditarCadastro />,
