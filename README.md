@@ -95,3 +95,9 @@ npm start
 - Caso o usuário não esteja logado ou não haja dados válidos, apenas a mensagem "Bem Vindo" será exibida.
 
 - Logout limpa os dados do usuário armazenados no localStorage e redireciona para a tela de login.
+
+---
+
+## Link do repositorio
+
+https://github.com/annaclrl/access-control-cp
