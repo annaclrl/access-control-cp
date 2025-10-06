@@ -1,73 +1,97 @@
-# React + TypeScript + Vite
+# Sistema de Cadastro e Login de Usuários
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este projeto é uma aplicação web simples construída com **React**, **TypeScript** e **React Hook Form**, utilizando **JSON Server** como banco de dados fake para gerenciamento de usuários. Ele permite que os usuários se cadastrem, façam login e vejam suas informações na tela inicial, além de oferecer a funcionalidade de logout.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 👨‍💻 Integrantes
 
-## React Compiler
+Anna Clara Russo Luca — RM: 561928
+Gabriel Duarte Maciel — RM: 565754
+Tiago Guedes da Costa — RM: 564731
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## Funcionalidades
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Cadastro de Usuário
+- Formulário para cadastro de novos usuários com validações:
+  - Nome (mínimo 3 caracteres)
+  - Nome de usuário (mínimo 3 caracteres, único)
+  - Email (mínimo 10 caracteres, único)
+- Verificação de duplicidade de nome de usuário e email antes do cadastro.
+- Atribuição automática de ID incremental para novos usuários.
+- Redirecionamento para a página de login após cadastro bem-sucedido.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Login de Usuário
+- Formulário de login solicitando nome de usuário e email.
+- Validação das credenciais com base nos dados do JSON Server.
+- Armazenamento do ID do usuário no `localStorage` ao realizar login.
+- Redirecionamento para a página inicial (`/home`) após login bem-sucedido.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Página Inicial (Home)
+- Exibição do usuário logado (nome de usuário e email) no centro da tela.
+- Botão de **Logout** que limpa o `localStorage` e redireciona para a página de login.
+- Layout responsivo e centralizado vertical e horizontalmente usando Flexbox.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+---
+
+## Tecnologias Utilizadas
+- **React** + **TypeScript**: para desenvolvimento da interface do usuário.
+- **React Hook Form**: para gerenciamento de formulários e validações.
+- **React Router Dom**: para gerenciamento de rotas.
+- **JSON Server**: para simular uma API RESTful simples.
+- **Tailwind CSS**: para estilização rápida e responsiva.
+
+---
+
+## Estrutura do Projeto
+
+src/
+├─ components/
+│ └─ Cabecalho.tsx
+├─ pages/
+│ ├─ Login.tsx
+│ ├─ Cadastro.tsx
+│ └─ Home.tsx
+├─ types/
+│ └─ Usuarios.ts
+├─ App.tsx
+└─ routes/
+└─ index.tsx
+db.json
+
+- `Cabecalho.tsx`: componente que exibe informações do usuário logado.
+- `Login.tsx`: página de login do usuário.
+- `Cadastro.tsx`: página de cadastro de novos usuários.
+- `Home.tsx`: página inicial após login com exibição de informações do usuário.
+- `db.json`: banco de dados fake do JSON Server com usuários cadastrados.
+
+---
+
+## Como Rodar o Projeto
+
+1. **Instalar dependências**
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+2. Iniciar o JSON Server
+```bash
+npm run api
 ```
+
+3. Iniciar a aplicação React
+```bash
+npm start
+```
+
+---
+
+## Observações
+
+- Ao abrir a página inicial, se o usuário estiver logado, suas informações são exibidas automaticamente.
+
+- Caso o usuário não esteja logado ou não haja dados válidos, apenas a mensagem "Bem Vindo" será exibida.
+
+- Logout limpa os dados do usuário armazenados no localStorage e redireciona para a tela de login.
