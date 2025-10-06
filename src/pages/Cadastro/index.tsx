@@ -9,38 +9,47 @@ const Cadastro = () => {
 
     const onSubmit = handleSubmit(async (data: Usuario) => {
         try {
+            const API_BASE = import.meta.env.VITE_API_URL_BASE;
 
-            const responseUsuario = await fetch(`http://localhost:3333/usuarios?nomeUsuario=${data.nomeUsuario}`);
+            const responseUsuario = await fetch(`${API_BASE}/usuarios?nomeUsuario=${data.nomeUsuario}`);
             const usuarioExistente = await responseUsuario.json();
             if (usuarioExistente.length > 0) {
                 alert("Nome de usuário já cadastrado!");
                 return;
             }
 
-            const responseEmail = await fetch(`http://localhost:3333/usuarios?email=${data.email}`);
+            const responseEmail = await fetch(`${API_BASE}/usuarios?email=${data.email}`);
             const emailExistente = await responseEmail.json();
             if (emailExistente.length > 0) {
                 alert("Email já cadastrado!");
                 return;
             }
 
-            const response = await fetch(`http://localhost:3333/usuarios`, {
+            const response = await fetch(`${API_BASE}/usuarios`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(data),
+                body: JSON.stringify({
+                    nome: data.nome,
+                    nomeUsuario: data.nomeUsuario,
+                    email: data.email,
+                }),
             });
 
-            if (!response.ok) throw new Error("Erro ao cadastrar usuário.");
+            console.log("Resposta do backend:", response.status, response.statusText);
+            const responseBody = await response.text();
+            console.log("Corpo da resposta:", responseBody);
+
+            if (!response.ok) throw new Error(`Erro ao cadastrar usuário: ${response.status} - ${response.statusText} - ${responseBody}`);
 
             alert("Cadastro realizado com sucesso!");
-            navigate("/");
-        } catch (error) {
+            navigate("/usuarios");
+        } catch (error: any) {
             console.error(error);
-            alert("Ocorreu um erro ao tentar cadastrar. Tente novamente.");
+            alert(`Ocorreu um erro ao tentar cadastrar: ${error.message || error}`);
         }
     });
 
-     return (
+    return (
         <main className="flex justify-center items-center h-screen bg-gray-500">
             <form onSubmit={onSubmit} className="bg-white p-6 rounded-2xl shadow-md w-90">
                 <h1 className="text-xl font-bold mb-4 text-center">Cadastro</h1>
@@ -56,6 +65,7 @@ const Cadastro = () => {
                         className="w-full border rounded p-2"
                     />
                     {errors.nome && <p className="text-red-500 text-sm mt-1">{errors.nome.message}</p>}
+
                 </div>
                 <div className="mb-4">
                     <label className="block mb-2">Nome de usuário</label>

@@ -1,10 +1,22 @@
 {
   "usuarios": [
     {
-      "id": "0d39",
-      "nome": "Anna Clara ",
+      "nome": "Gabriel",
+      "nomeUsuario": "GBduarte",
+      "email": "gbduarte@gmail.com",
+      "id": "0d39"
+    },
+    {
+      "id": "a797",
+      "nome": "Tiago",
+      "nomeUsuario": "Tiagozguedes",
+      "email": "tiagozguedes@gmail.com"
+    },
+    {
+      "id": "811e",
+      "nome": "Ana",
       "nomeUsuario": "Anna",
-      "email": "anna@email.com"
+      "email": "anna@gmail.com"
     }
   ]
 }

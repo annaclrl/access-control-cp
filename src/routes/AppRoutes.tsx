@@ -1,15 +1,30 @@
 import { createBrowserRouter } from "react-router-dom";
 import Login from "../pages/Login"
 import Cadastro from "../pages/Cadastro";
+import EditarCadastro from "../pages/EditarCadastro/editarCadastro";
+import ListarUsuarios from "../pages/ListarUsuarios/listarUsuraios";
+import App from "../App";
 
 export const routes = createBrowserRouter([
-    {
-        path: "/",
-        element: <Login/>,
-    },
-    {
+  {
+    path: "/",
+    element: <Login />,
+  },
+  {
+    element: <App />, // Layout com Header
+    children: [
+      {
         path: "/cadastro",
-        element: <Cadastro/>,
-    }
-])
-
+        element: <Cadastro />,
+      },
+      {
+        path: "/usuarios",
+        element: <ListarUsuarios />,
+      },
+      {
+        path: "/editar-cadastro/:id",
+        element: <EditarCadastro />,
+      },
+    ],
+  },
+]);
