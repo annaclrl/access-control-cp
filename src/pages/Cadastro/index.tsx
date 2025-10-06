@@ -1,53 +1,57 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import type { Usuario } from "../../types/Usuarios";
 import { useForm } from "react-hook-form";
 
 const Cadastro = () => {
     const navigate = useNavigate();
 
-    const { register, handleSubmit, formState: { errors } } = useForm<Usuario>();
+    const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Usuario>();
 
-    const onSubmit = handleSubmit(async (data: Usuario) => {
-        try {
-            const API_BASE = import.meta.env.VITE_API_URL_BASE;
+  const onSubmit = handleSubmit(async (data: Usuario) => {
+    try {
+      const responseUsuario = await fetch(`http://localhost:3334/usuarios?nomeUsuario=${data.nomeUsuario}`);
+      const usuariosComMesmoNome = await responseUsuario.json();
+      if (usuariosComMesmoNome.length > 0) {
+        alert("Nome de usuário já cadastrado!");
+        return;
+      }
 
-            const responseUsuario = await fetch(`${API_BASE}/usuarios?nomeUsuario=${data.nomeUsuario}`);
-            const usuarioExistente = await responseUsuario.json();
-            if (usuarioExistente.length > 0) {
-                alert("Nome de usuário já cadastrado!");
-                return;
-            }
+      const responseEmail = await fetch(`http://localhost:3334/usuarios?email=${data.email}`);
+      const usuariosComMesmoEmail = await responseEmail.json();
+      if (usuariosComMesmoEmail.length > 0) {
+        alert("Email já cadastrado!");
+        return;
+      }
 
-            const responseEmail = await fetch(`${API_BASE}/usuarios?email=${data.email}`);
-            const emailExistente = await responseEmail.json();
-            if (emailExistente.length > 0) {
-                alert("Email já cadastrado!");
-                return;
-            }
+      const responseTodos = await fetch("http://localhost:3334/usuarios");
+      const todosUsuarios: Usuario[] = await responseTodos.json();
+      const ultimoId = todosUsuarios.length > 0 ? Math.max(...todosUsuarios.map(u => u.id)) : 0;
+      const novoId = ultimoId + 1;
 
-            const response = await fetch(`${API_BASE}/usuarios`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    nome: data.nome,
-                    nomeUsuario: data.nomeUsuario,
-                    email: data.email,
-                }),
-            });
+      const response = await fetch("http://localhost:3334/usuarios", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: novoId,
+          nome: data.nome,
+          nomeUsuario: data.nomeUsuario,
+          email: data.email,
+        }),
+      });
 
-            console.log("Resposta do backend:", response.status, response.statusText);
-            const responseBody = await response.text();
-            console.log("Corpo da resposta:", responseBody);
+      if (!response.ok) throw new Error(`Erro ao cadastrar usuário: ${response.status}`);
 
-            if (!response.ok) throw new Error(`Erro ao cadastrar usuário: ${response.status} - ${response.statusText} - ${responseBody}`);
-
-            alert("Cadastro realizado com sucesso!");
-            navigate("/usuarios");
-        } catch (error: any) {
-            console.error(error);
-            alert(`Ocorreu um erro ao tentar cadastrar: ${error.message || error}`);
-        }
-    });
+      alert("Cadastro realizado com sucesso!");
+      navigate("/login");
+    } catch (error: any) {
+      console.error(error);
+      alert(`Ocorreu um erro ao tentar cadastrar: ${error.message || error}`);
+    }
+  });
 
     return (
         <main className="flex justify-center items-center h-screen bg-gray-500">
@@ -94,6 +98,7 @@ const Cadastro = () => {
                     {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
                 </div>
                 <button type="submit" className="w-full bg-gray-800 text-white rounded p-2 ">Cadastrar</button>
+                <p className="mt-4 text-center text-sm text-gray-600"> Já possui uma conta? <Link to={"/login"} className="text-blue-500 underline">Faça Login aqui</Link></p>
             </form>
         </main>
     )

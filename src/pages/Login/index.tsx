@@ -4,37 +4,40 @@ import { useForm } from "react-hook-form";
 
 
 const Login = () => {
-
     const navigate = useNavigate();
 
     const { register, handleSubmit, formState: { errors } } = useForm<LoginForm>();
 
-    const onSubmit = async (data: LoginForm) => {
-        try {
-            const API_BASE = import.meta.env.VITE_API_URL_BASE;
+  const onSubmit = handleSubmit(async (data: LoginForm) => {
+    try {
+      
+      const response = await fetch(
+        `http://localhost:3334/usuarios?nomeUsuario=${data.nomeUsuario}&email=${data.email}`
+      );
+      const usuarios = await response.json();
 
-            const response = await fetch(`${API_BASE}/usuarios?nomeUsuario=${data.nomeUsuario}&email=${data.email}`);
+      if (usuarios.length === 0) {
+        alert("Nome de usuário ou email incorretos!");
+        return;
+      }
 
-            if (!response.ok) throw new Error("Erro ao consultar usuário.");
+      
+      const usuarioLogado = usuarios[0];
 
-            const usuario = await response.json();
+      
+      localStorage.setItem("userLogado", usuarioLogado.id);
 
-            if (usuario.length > 0) {
-                localStorage.setItem("usuarioLogado", JSON.stringify(usuario[0]));
-                alert("Login realizado com sucesso!");
-                navigate("/usuarios");
-            } else {
-                alert("Nome de usuário ou email incorretos.");
-            }
-        } catch (error) {
-            console.error(error);
-            alert("Ocorreu um erro ao tentar logar. Tente novamente.");
-        }
+      alert(`Login realizado com sucesso! Bem-vindo, ${usuarioLogado.nomeUsuario}`);
+      navigate("/home");
+    } catch (error: any) {
+      console.error(error);
+      alert(`Ocorreu um erro ao tentar logar: ${error.message || error}`);
     }
+  });
 
     return (
         <main className="flex justify-center items-center h-screen bg-gray-500">
-            <form onSubmit={handleSubmit(onSubmit)} className="bg-white p-6 rounded-2xl shadow-md w-90">
+            <form onSubmit={onSubmit} className="bg-white p-6 rounded-2xl shadow-md w-90">
                 <h1 className="text-xl font-bold mb-4 text-center">Login</h1>
                 <div className="mb-4">
                     <label className="block mb-2">Nome de usuário</label>
